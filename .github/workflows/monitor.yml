@@ -21,12 +21,12 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install prometheus_client flask
+          pip install flask prometheus_client
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
 
-      - name: Build & run Docker containers
+      - name: Build and run containers
         run: |
           docker-compose up -d
           sleep 10
@@ -34,7 +34,6 @@ jobs:
 
       - name: Copy inference.log from container
         run: |
-          docker ps -a
           container_id=$(docker ps -qf "name=ai-model")
           docker cp $container_id:/app/inference.log .
           ls -lah
@@ -44,7 +43,7 @@ jobs:
           python agent.py
 
       - name: Upload alert report
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v3
         with:
           name: ai-alert-report
           path: alert.txt
