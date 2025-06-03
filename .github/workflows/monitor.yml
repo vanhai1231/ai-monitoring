@@ -43,7 +43,7 @@ jobs:
           python agent.py
 
       - name: Upload alert report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: ai-alert-report
           path: alert.txt
